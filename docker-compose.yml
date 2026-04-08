@@ -1,0 +1,14 @@
+services:
+  leaderboard:
+    build: .
+    container_name: codedash-leaderboard
+    ports:
+      - "127.0.0.1:3100:3000"
+    volumes:
+      - leaderboard-data:/app/data
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  leaderboard-data:
