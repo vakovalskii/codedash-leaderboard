@@ -114,37 +114,42 @@ export default function App() {
             const agents = Object.entries(user.stats?.agents || {}).sort((a, b) => b[1] - a[1]).slice(0, 4);
             const rankClass = i === 0 ? 'text-yellow-400' : i === 1 ? 'text-gray-400' : i === 2 ? 'text-amber-600' : 'text-gray-600';
 
+            const shortAgent = (a) => a === 'claude-ext' ? 'cl-ext' : a;
+
             return (
-              <div key={user.username} className="flex items-center gap-4 p-4 bg-[#161b22] border border-[#30363d] rounded-xl hover:border-blue-500/50 transition-colors">
-                <div className={`text-xl font-bold w-8 text-center ${rankClass}`}>#{i + 1}</div>
-                <img src={user.avatar} alt="" className="w-12 h-12 rounded-full border-2 border-[#30363d]" />
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold">
-                    <a href={`https://github.com/${user.username}`} target="_blank" className="hover:text-blue-400">
-                      {user.name || user.username}
-                    </a>
-                    {user.verified && <span className="text-green-400 text-xs ml-1">&#10003;</span>}
-                    {user.deviceCount > 1 && <span className="text-[#6e7681] text-[10px] ml-1">{user.deviceCount} devices</span>}
-                  </div>
-                  <div className="text-gray-500 text-sm">
-                    <a href={`https://github.com/${user.username}`} target="_blank" className="hover:text-gray-400">
-                      @{user.username}
-                    </a>
-                  </div>
-                  {agents.length > 0 && (
-                    <div className="flex gap-1 mt-1">
-                      {agents.map(([a]) => (
-                        <span key={a} className={`text-[10px] px-1.5 py-0.5 rounded ${AGENT_COLORS[a] || 'bg-gray-500/20 text-gray-400'}`}>
-                          {a}
-                        </span>
-                      ))}
+              <div key={user.username} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 bg-[#161b22] border border-[#30363d] rounded-xl hover:border-blue-500/50 transition-all duration-200 hover:bg-[#1c2129]"
+                style={{ animationDelay: `${i * 30}ms` }}>
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className={`text-xl font-bold w-8 text-center shrink-0 ${rankClass}`}>#{i + 1}</div>
+                  <img src={user.avatar} alt="" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#30363d] shrink-0" />
+                  <div className="min-w-0">
+                    <div className="font-semibold truncate">
+                      <a href={`https://github.com/${user.username}`} target="_blank" className="hover:text-blue-400 transition-colors">
+                        {user.name || user.username}
+                      </a>
+                      {user.verified && <span className="text-green-400 text-xs ml-1">&#10003;</span>}
+                      {user.deviceCount > 1 && <span className="text-[#6e7681] text-[10px] ml-1">{user.deviceCount} dev</span>}
                     </div>
-                  )}
+                    <div className="text-gray-500 text-sm">
+                      <a href={`https://github.com/${user.username}`} target="_blank" className="hover:text-gray-400">
+                        @{user.username}
+                      </a>
+                    </div>
+                    {agents.length > 0 && (
+                      <div className="flex gap-1 mt-1 overflow-hidden">
+                        {agents.map(([a]) => (
+                          <span key={a} className={`text-[10px] px-1.5 py-0.5 rounded whitespace-nowrap ${AGENT_COLORS[a] || 'bg-gray-500/20 text-gray-400'}`}>
+                            {shortAgent(a)}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="flex gap-4 text-sm text-gray-500 flex-wrap justify-end">
-                  <span><strong className="text-[#e6edf3]">{msgs.toLocaleString()}</strong> prompts</span>
-                  <span><strong className="text-[#e6edf3]">{hours.toFixed(1)}h</strong> coded</span>
-                  <span><strong className="text-[#e6edf3]">${cost.toFixed(0)}</strong> spent</span>
+                <div className="flex gap-3 sm:gap-4 text-sm text-gray-500 flex-wrap sm:justify-end sm:ml-auto pl-11 sm:pl-0">
+                  <span><strong className="text-[#e6edf3]">{msgs.toLocaleString()}</strong> <span className="hidden sm:inline">prompts</span><span className="sm:hidden">pr</span></span>
+                  <span><strong className="text-[#e6edf3]">{hours.toFixed(1)}h</strong></span>
+                  <span><strong className="text-[#e6edf3]">${cost.toFixed(0)}</strong></span>
                   {streak > 1 && (
                     <span className="bg-orange-500/15 text-orange-400 px-2 py-0.5 rounded-full text-xs font-semibold">
                       &#128293; {streak}d

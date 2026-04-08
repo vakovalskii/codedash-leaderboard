@@ -296,14 +296,14 @@ async function handleStats(req, res) {
       return sendJSON(res, 400, { error: 'Missing required fields: username, stats, deviceId' });
     }
 
-    // Rate limit: 1 sync per user per 60 seconds
+    // Rate limit: 1 sync per user per 15 seconds
     const rateLimitKey = `stats:${username}`;
     const rl = stmts.getRateLimit.get(rateLimitKey);
     const now = Date.now();
-    if (rl && now - rl.timestamp < 60000) {
+    if (rl && now - rl.timestamp < 15000) {
       return sendJSON(res, 429, {
         error: 'Rate limited',
-        retryAfter: Math.ceil((60000 - (now - rl.timestamp)) / 1000),
+        retryAfter: Math.ceil((15000 - (now - rl.timestamp)) / 1000),
       });
     }
 
