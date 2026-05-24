@@ -6,6 +6,8 @@ const AGENT_COLORS = {
   codex: 'bg-green-500/20 text-green-400',
   cursor: 'bg-blue-500/20 text-blue-400',
   opencode: 'bg-purple-500/20 text-purple-400',
+  pi: 'bg-[#a78bfa]/15 text-[#a78bfa]',
+  ohmypi: 'bg-[#a78bfa]/15 text-[#a78bfa]',
   kiro: 'bg-pink-500/20 text-pink-400',
 };
 
